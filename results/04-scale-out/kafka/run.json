@@ -1,0 +1,108 @@
+{
+  "arm": "kafka",
+  "backlog_events": 7999936,
+  "config": {
+    "consumer_counts": [
+      1,
+      2,
+      4
+    ],
+    "partitions": 6,
+    "sink": "counting HTTP sink (Elasticsearch removed)"
+  },
+  "host": {
+    "cpus": 18,
+    "docker_version": "29.7.2",
+    "memory_bytes": 25159270400
+  },
+  "preload": {
+    "arm": "kafka",
+    "buffer_events": 500000,
+    "bytes_out": 4864075632,
+    "compression": "lz4",
+    "delivered": 7999936,
+    "delivery_errors": 0,
+    "dropped_at_source": 0,
+    "ended_at_ms": 1789421300257,
+    "generation_ended_at_ms": 1789421300206,
+    "generators": 6,
+    "payload_bytes": 600,
+    "per_generator": {
+      "0": {
+        "first_seq": 0,
+        "last_seq": 1333311,
+        "produced": 1333312,
+        "replays": 0
+      },
+      "1": {
+        "first_seq": 0,
+        "last_seq": 1333308,
+        "produced": 1333309,
+        "replays": 0
+      },
+      "2": {
+        "first_seq": 0,
+        "last_seq": 1333326,
+        "produced": 1333327,
+        "replays": 0
+      },
+      "3": {
+        "first_seq": 0,
+        "last_seq": 1333328,
+        "produced": 1333329,
+        "replays": 0
+      },
+      "4": {
+        "first_seq": 0,
+        "last_seq": 1333324,
+        "produced": 1333325,
+        "replays": 0
+      },
+      "5": {
+        "first_seq": 0,
+        "last_seq": 1333333,
+        "produced": 1333334,
+        "replays": 0
+      }
+    },
+    "phases": [
+      {
+        "rate": 200000.0,
+        "seconds": 40.0
+      }
+    ],
+    "produced": 7999936,
+    "replay_fraction": 0.0,
+    "replays_sent": 0,
+    "run_id": "04-scale-out-preload",
+    "started_at_ms": 1789421260204
+  },
+  "recorded_at": "2026-09-14T23:30:57+0200",
+  "runs": [
+    {
+      "complete": true,
+      "consumers": 1,
+      "events": 7999936,
+      "events_per_s": 119572.7,
+      "seconds": 66.9,
+      "speedup_vs_1": 1.0
+    },
+    {
+      "complete": true,
+      "consumers": 2,
+      "events": 7999936,
+      "events_per_s": 213863.5,
+      "seconds": 37.41,
+      "speedup_vs_1": 1.79
+    },
+    {
+      "complete": true,
+      "consumers": 4,
+      "events": 7999936,
+      "events_per_s": 284213.1,
+      "seconds": 28.15,
+      "speedup_vs_1": 2.38
+    }
+  ],
+  "scenario": "04-scale-out"
+}

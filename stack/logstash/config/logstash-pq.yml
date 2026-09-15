@@ -1,0 +1,21 @@
+api.http.host: "0.0.0.0"
+
+# The image ships its own pipeline/logstash.conf with a beats input and a
+# stdout output. Logstash concatenates every .conf in the pipeline directory,
+# so pointing at our own directory is what keeps that default out of the
+# measured pipeline.
+path.config: /usr/share/logstash/bench-pipeline/*.conf
+
+pipeline.workers: ${BENCH_LS_WORKERS:8}
+pipeline.batch.size: ${BENCH_LS_BATCH:1000}
+pipeline.batch.delay: 50
+
+# Persisted queue: the strongest durability a Logstash node can offer without
+# an external broker. Events survive a Logstash restart, but the queue is
+# local, bounded by queue.max_bytes, and lost with the node's disk.
+queue.type: persisted
+queue.max_bytes: 4gb
+queue.checkpoint.writes: 1024
+
+log.level: info
+monitoring.enabled: false

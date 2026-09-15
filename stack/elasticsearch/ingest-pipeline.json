@@ -1,0 +1,11 @@
+{
+  "description": "Stamps the instant Elasticsearch received the document. Paired with the generator's emit_ts, this is the end-to-end latency measurement, and it is taken inside Elasticsearch so no client clock is involved on the receiving side.",
+  "processors": [
+    {
+      "set": {
+        "field": "ingest_ts",
+        "value": "{{{_ingest.timestamp}}}"
+      }
+    }
+  ]
+}

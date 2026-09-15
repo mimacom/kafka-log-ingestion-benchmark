@@ -1,0 +1,39 @@
+{
+  "index_patterns": ["bench-logs*"],
+  "priority": 500,
+  "template": {
+    "settings": {
+      "number_of_shards": 3,
+      "number_of_replicas": 0,
+      "refresh_interval": "1s",
+      "index.codec": "default",
+      "index.default_pipeline": "bench-ingest-ts"
+    },
+    "mappings": {
+      "_source": { "enabled": true },
+      "dynamic": false,
+      "properties": {
+        "@timestamp":    { "type": "date" },
+        "ingest_ts":     { "type": "date", "format": "strict_date_optional_time_nanos||strict_date_optional_time||epoch_millis" },
+        "emit_ts":       { "type": "date" },
+        "gen_id":        { "type": "short" },
+        "seq":           { "type": "long" },
+        "arm":           { "type": "keyword" },
+        "run_id":        { "type": "keyword" },
+        "message":       { "type": "text" },
+        "log_level":     { "type": "keyword" },
+        "logger":        { "type": "keyword" },
+        "severity_code": { "type": "byte" },
+        "host_name":     { "type": "keyword" },
+        "service_name":  { "type": "keyword" },
+        "src_ip":        { "type": "ip" },
+        "user_name":     { "type": "keyword" },
+        "http_method":   { "type": "keyword" },
+        "status_code":   { "type": "short" },
+        "bytes":         { "type": "long" },
+        "trace_id":      { "type": "keyword" },
+        "filler":        { "type": "keyword", "index": false, "doc_values": false }
+      }
+    }
+  }
+}

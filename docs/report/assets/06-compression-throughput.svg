@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 380" width="820" height="380" role="img" aria-label="Producer throughput by codec" font-family='"Neue-Campton", Jost, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'>
+<rect width="820" height="380" fill="#ffffff"/>
+<text x="48" y="30" font-size="17" font-weight="500" fill="#242424">Producer throughput by codec</text>
+<text x="48" y="50" font-size="13" fill="#787878">Compression is a trade: the cheapest bytes are not the cheapest CPU</text>
+<text x="48" y="368" font-size="12" fill="#787878">Higher is better</text>
+<text transform="translate(17,86) rotate(-90)" font-size="12" fill="#787878" text-anchor="end">events / second produced</text>
+<line x1="96" y1="322.0" x2="794" y2="322.0" stroke="#d8dade" stroke-width="1"/>
+<text x="86" y="326.0" font-size="11.5" fill="#787878" text-anchor="end">0</text>
+<line x1="96" y1="274.0" x2="794" y2="274.0" stroke="#d8dade" stroke-width="1"/>
+<text x="86" y="278.0" font-size="11.5" fill="#787878" text-anchor="end">50,000</text>
+<line x1="96" y1="226.0" x2="794" y2="226.0" stroke="#d8dade" stroke-width="1"/>
+<text x="86" y="230.0" font-size="11.5" fill="#787878" text-anchor="end">100,000</text>
+<line x1="96" y1="178.0" x2="794" y2="178.0" stroke="#d8dade" stroke-width="1"/>
+<text x="86" y="182.0" font-size="11.5" fill="#787878" text-anchor="end">150,000</text>
+<line x1="96" y1="130.0" x2="794" y2="130.0" stroke="#d8dade" stroke-width="1"/>
+<text x="86" y="134.0" font-size="11.5" fill="#787878" text-anchor="end">200,000</text>
+<line x1="96" y1="82.0" x2="794" y2="82.0" stroke="#d8dade" stroke-width="1"/>
+<text x="86" y="86.0" font-size="11.5" fill="#787878" text-anchor="end">250,000</text>
+<rect x="135.2" y="90.2" width="96.0" height="231.8" fill="#5b6b7f" rx="3"/>
+<text x="183.2" y="82.2" font-size="13" font-weight="500" fill="#242424" text-anchor="middle">241,498</text>
+<text x="183.2" y="342.0" font-size="12" fill="#414141" text-anchor="middle">none</text>
+<rect x="309.8" y="106.5" width="96.0" height="215.5" fill="#5b6b7f" rx="3"/>
+<text x="357.8" y="98.5" font-size="13" font-weight="500" fill="#242424" text-anchor="middle">224,490</text>
+<text x="357.8" y="342.0" font-size="12" fill="#414141" text-anchor="middle">gzip</text>
+<rect x="484.2" y="86.5" width="96.0" height="235.5" fill="#5b6b7f" rx="3"/>
+<text x="532.2" y="78.5" font-size="13" font-weight="500" fill="#242424" text-anchor="middle">245,361</text>
+<text x="532.2" y="342.0" font-size="12" fill="#414141" text-anchor="middle">lz4</text>
+<rect x="658.8" y="85.8" width="96.0" height="236.2" fill="#5b6b7f" rx="3"/>
+<text x="706.8" y="77.8" font-size="13" font-weight="500" fill="#242424" text-anchor="middle">246,056</text>
+<text x="706.8" y="342.0" font-size="12" fill="#414141" text-anchor="middle">zstd</text>
+<line x1="96" y1="322" x2="794" y2="322" stroke="#414141" stroke-width="1.2"/>
+</svg>

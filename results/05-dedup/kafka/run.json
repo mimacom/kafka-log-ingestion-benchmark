@@ -1,0 +1,241 @@
+{
+  "arm": "kafka",
+  "config": {
+    "generators": 4,
+    "rate": 5000,
+    "replay_fraction": 0.2,
+    "seconds": 90
+  },
+  "duplicate_docs_removed": 89642,
+  "host": {
+    "cpus": 18,
+    "docker_version": "29.7.2",
+    "memory_bytes": 25159270400
+  },
+  "index_bytes_saved": -3048142,
+  "index_pct_saved": -2.0,
+  "recorded_at": "2026-09-14T23:59:17+0200",
+  "scenario": "05-dedup",
+  "variants": [
+    {
+      "dedup_enabled": false,
+      "docs_in_elasticsearch": 539642,
+      "duplicate_docs": 89642,
+      "events_on_the_wire": 539642,
+      "generator": {
+        "arm": "kafka",
+        "buffer_events": 200000,
+        "bytes_out": 325328622,
+        "compression": "lz4",
+        "delivered": 539642,
+        "delivery_errors": 0,
+        "dropped_at_source": 0,
+        "ended_at_ms": 1789422972934,
+        "generation_ended_at_ms": 1789422972878,
+        "generators": 4,
+        "payload_bytes": 600,
+        "per_generator": {
+          "0": {
+            "first_seq": 0,
+            "last_seq": 112499,
+            "produced": 112500,
+            "replays": 22488
+          },
+          "1": {
+            "first_seq": 0,
+            "last_seq": 112499,
+            "produced": 112500,
+            "replays": 22474
+          },
+          "2": {
+            "first_seq": 0,
+            "last_seq": 112499,
+            "produced": 112500,
+            "replays": 22439
+          },
+          "3": {
+            "first_seq": 0,
+            "last_seq": 112499,
+            "produced": 112500,
+            "replays": 22241
+          }
+        },
+        "phases": [
+          {
+            "rate": 5000.0,
+            "seconds": 90.0
+          }
+        ],
+        "produced": 450000,
+        "replay_fraction": 0.2,
+        "replays_sent": 89642,
+        "run_id": "05-dedup-auto-id",
+        "started_at_ms": 1789422882877
+      },
+      "index_size_bytes": 150408834,
+      "missing": 0,
+      "mode": "auto-id",
+      "replays_sent": 89642,
+      "unique_events": 450000,
+      "verify": {
+        "docs_scanned": 539642,
+        "dropped_at_source": 0,
+        "duplicates": 89642,
+        "expected": 450000,
+        "index": "bench-logs",
+        "indexed_unique": 450000,
+        "latency_ms": {
+          "50": 84,
+          "90": 149,
+          "95": 159,
+          "99": 174,
+          "99.9": 192,
+          "max": 258,
+          "mean": 84.9,
+          "negative_clamped": 0,
+          "samples": 450000
+        },
+        "loss_pct": 0.0,
+        "lost_in_transit": 0,
+        "missing": 0,
+        "per_generator": {
+          "0": {
+            "expected": 112500,
+            "first_gap": null,
+            "indexed_unique": 112500,
+            "missing": 0
+          },
+          "1": {
+            "expected": 112500,
+            "first_gap": null,
+            "indexed_unique": 112500,
+            "missing": 0
+          },
+          "2": {
+            "expected": 112500,
+            "first_gap": null,
+            "indexed_unique": 112500,
+            "missing": 0
+          },
+          "3": {
+            "expected": 112500,
+            "first_gap": null,
+            "indexed_unique": 112500,
+            "missing": 0
+          }
+        },
+        "unknown_generator_docs": 0
+      }
+    },
+    {
+      "dedup_enabled": true,
+      "docs_in_elasticsearch": 450000,
+      "duplicate_docs": 0,
+      "events_on_the_wire": 539642,
+      "generator": {
+        "arm": "kafka",
+        "buffer_events": 200000,
+        "bytes_out": 329106116,
+        "compression": "lz4",
+        "delivered": 539642,
+        "delivery_errors": 0,
+        "dropped_at_source": 0,
+        "ended_at_ms": 1789423136387,
+        "generation_ended_at_ms": 1789423136337,
+        "generators": 4,
+        "payload_bytes": 600,
+        "per_generator": {
+          "0": {
+            "first_seq": 0,
+            "last_seq": 112499,
+            "produced": 112500,
+            "replays": 22488
+          },
+          "1": {
+            "first_seq": 0,
+            "last_seq": 112499,
+            "produced": 112500,
+            "replays": 22474
+          },
+          "2": {
+            "first_seq": 0,
+            "last_seq": 112499,
+            "produced": 112500,
+            "replays": 22439
+          },
+          "3": {
+            "first_seq": 0,
+            "last_seq": 112499,
+            "produced": 112500,
+            "replays": 22241
+          }
+        },
+        "phases": [
+          {
+            "rate": 5000.0,
+            "seconds": 90.0
+          }
+        ],
+        "produced": 450000,
+        "replay_fraction": 0.2,
+        "replays_sent": 89642,
+        "run_id": "05-dedup-fingerprint-id",
+        "started_at_ms": 1789423046336
+      },
+      "index_size_bytes": 153456976,
+      "missing": 0,
+      "mode": "fingerprint-id",
+      "replays_sent": 89642,
+      "unique_events": 450000,
+      "verify": {
+        "docs_scanned": 450000,
+        "dropped_at_source": 0,
+        "duplicates": 0,
+        "expected": 450000,
+        "index": "bench-logs",
+        "indexed_unique": 450000,
+        "latency_ms": {
+          "50": 86,
+          "90": 149,
+          "95": 159,
+          "99": 174,
+          "99.9": 191,
+          "max": 239,
+          "mean": 86.5,
+          "negative_clamped": 0,
+          "samples": 450000
+        },
+        "loss_pct": 0.0,
+        "lost_in_transit": 0,
+        "missing": 0,
+        "per_generator": {
+          "0": {
+            "expected": 112500,
+            "first_gap": null,
+            "indexed_unique": 112500,
+            "missing": 0
+          },
+          "1": {
+            "expected": 112500,
+            "first_gap": null,
+            "indexed_unique": 112500,
+            "missing": 0
+          },
+          "2": {
+            "expected": 112500,
+            "first_gap": null,
+            "indexed_unique": 112500,
+            "missing": 0
+          },
+          "3": {
+            "expected": 112500,
+            "first_gap": null,
+            "indexed_unique": 112500,
+            "missing": 0
+          }
+        },
+        "unknown_generator_docs": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+# Customer material never belongs in this repository.
+docs/
+*.docx
+*.pptx
+*.pdf
+
+.env
+__pycache__/
+*.pyc
+.DS_Store
+
+# Raw per-run scratch files; the committed evidence is results/**/run.json.
+results/tmp/

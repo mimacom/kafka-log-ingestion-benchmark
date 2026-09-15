@@ -1,0 +1,18 @@
+Kafka log ingestion benchmark
+Copyright 2026 mimacom ag
+
+Licensed under the Apache License, Version 2.0. See LICENSE.
+
+Trademarks
+----------
+The Apache License does not grant permission to use the trade names,
+trademarks, service marks or product names of the licensor (see section 6).
+
+This repository contains the mimacom logo in docs/report/assets/logo.svg and
+embedded in docs/report/index.html. That logo is a trademark of mimacom ag and is
+not licensed under the Apache License. Remove it from any derivative work, or
+replace it with your own mark.
+
+Apache Kafka, Elasticsearch, Logstash and Kibana are trademarks of their
+respective owners and are referenced here only to identify the software under
+test.

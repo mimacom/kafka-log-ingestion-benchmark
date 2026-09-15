@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Does a Kafka buffer earn its place in a log pipeline?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&display=swap"
+ rel="stylesheet">
+<style>
+:root {
+  --primary: #ff0651;
+  --secondary: #b80037;
+  --text: #242424;
+  --page: #f4f5f6;
+  --surface: #ffffff;
+  --dark-gray: #414141;
+  --muted: #787878;
+  --line: #d8dade;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--page); color: var(--text);
+  font-family: "Neue-Campton", Jost, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 18px; line-height: 28px; -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 28px 96px; }
+header.top { background: var(--surface); border-bottom: 1px solid var(--line); }
+header.top .wrap { padding: 26px 28px; display: flex; align-items: center;
+  justify-content: space-between; gap: 24px; }
+header.top .logo { color: var(--text); display: flex; align-items: center; }
+header.top .logo svg { height: 26px; width: auto; }
+header.top .kicker { font-size: 13px; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--muted); }
+
+.hero { padding: 72px 0 28px; }
+.hero .eyebrow { display: inline-block; font-size: 13px; font-weight: 600;
+  letter-spacing: 1px; text-transform: uppercase; color: var(--surface);
+  background: var(--primary); padding: 6px 12px; border-radius: 4px; margin-bottom: 24px; }
+h1 { margin: 0 0 20px; font-weight: 500; font-size: clamp(38px, 5.4vw, 64px);
+  line-height: 1.04; letter-spacing: -0.5px; }
+h2 { margin: 0; font-weight: 500; font-size: clamp(28px, 3.4vw, 40px); line-height: 1.12; }
+h3 { margin: 40px 0 12px; font-weight: 500; font-size: 22px; line-height: 30px; }
+.hero p.sub { font-size: 21px; line-height: 32px; color: var(--dark-gray); max-width: 62ch; }
+
+section { background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+  padding: 36px 40px 40px; margin: 28px 0; }
+.sec-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 14px; }
+.sec-num { font-size: 14px; font-weight: 600; color: var(--primary);
+  border: 2px solid var(--primary); border-radius: 8px; padding: 4px 10px;
+  line-height: 1; letter-spacing: 1px; }
+.lede { color: var(--dark-gray); max-width: 72ch; margin: 0 0 26px; }
+p, li { max-width: 76ch; }
+
+img { display: block; width: 100%; height: auto; margin: 26px 0 8px;
+  border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+
+.table-wrap { overflow-x: auto; margin: 22px 0 6px; }
+table { border-collapse: collapse; width: 100%; font-size: 15px; line-height: 22px; }
+th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line);
+  white-space: nowrap; }
+th { font-size: 12px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase;
+  color: var(--muted); border-bottom: 2px solid var(--line); }
+tbody tr:hover { background: var(--page); }
+td strong.good { color: #0f8a5f; }
+td strong.bad { color: var(--primary); }
+.note { font-size: 14px; line-height: 21px; color: var(--muted); margin: 10px 0 0;
+  max-width: 82ch; }
+.callout { margin: 22px 0 0; padding: 16px 20px; border-left: 4px solid var(--primary);
+  background: var(--page); border-radius: 0 8px 8px 0; font-size: 16px; line-height: 25px; }
+
+.meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 1px; background: var(--line); border: 1px solid var(--line);
+  border-radius: 8px; overflow: hidden; margin: 32px 0 0; }
+.meta div { background: var(--surface); padding: 16px 18px; }
+.meta dt { font-size: 12px; letter-spacing: 0.6px; text-transform: uppercase;
+  color: var(--muted); margin: 0 0 4px; }
+.meta dd { margin: 0; font-size: 17px; font-weight: 500; }
+
+footer { color: var(--muted); font-size: 14px; line-height: 22px; padding-top: 12px; }
+footer a, .lede a, p a { color: var(--secondary); }
+ul.plain { padding-left: 20px; }
+ul.plain li { margin-bottom: 10px; color: var(--dark-gray); }
+@media (max-width: 680px) {
+  section { padding: 26px 20px 30px; }
+  th, td { padding: 9px 10px; }
+}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <span class="logo"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 161 28" height="26"><path d="M36.455 8.623H31.13v18.022h5.325V8.623Zm47.882 1.34c-1.199-1.182-2.8-1.977-4.873-1.977-5.318 0-9.037 3.946-9.037 9.531 0 5.585 3.678 9.618 8.996 9.618 1.927 0 3.607-.934 4.914-2.328v1.834h5.325V8.622h-5.325v1.341ZM79.803 22.19c-2.505 0-4.537-2.048-4.537-4.575s2.032-4.575 4.537-4.575c2.506 0 4.448 1.958 4.534 4.41v.33c-.086 2.452-2.084 4.41-4.534 4.41ZM18.821 8.02a7.988 7.988 0 0 0-5.385 2.094A7.97 7.97 0 0 0 8.051 8.02C3.648 8.02.078 11.586 0 16.007v10.638h5.325V16.146c0-1.517 1.221-2.749 2.726-2.749s2.652 1.156 2.723 2.61v10.638h5.325l.004-10.596c.052-1.473 1.247-2.652 2.718-2.652a2.727 2.727 0 0 1 2.723 2.61v10.638h5.325l.011-10.499c0-4.488-3.607-8.122-8.055-8.122l-.004-.004Zm40.836 0a7.987 7.987 0 0 0-5.385 2.094 7.97 7.97 0 0 0-5.385-2.094c-4.403 0-7.973 3.562-8.048 7.987v10.638h5.325V16.146c0-1.517 1.221-2.749 2.726-2.749s2.652 1.156 2.723 2.61v10.638h5.325l.004-10.596c.052-1.473 1.247-2.652 2.718-2.652a2.727 2.727 0 0 1 2.723 2.61v10.638h5.325l.011-10.499c0-4.488-3.607-8.122-8.055-8.122l-.007-.004Zm93.288 0a7.988 7.988 0 0 0-5.385 2.094 7.97 7.97 0 0 0-5.385-2.094c-4.403 0-7.973 3.562-8.048 7.987v10.638h5.326V16.146c0-1.517 1.221-2.749 2.726-2.749s2.651 1.156 2.722 2.61v10.638h5.325l.004-10.596c.052-1.473 1.247-2.652 2.719-2.652a2.727 2.727 0 0 1 2.722 2.61v10.638h5.325l.011-10.499c0-4.488-3.607-8.122-8.055-8.122l-.007-.004ZM33.695 6.913c1.656 0 2.999-1.354 2.999-3.024S35.35.865 33.695.865c-1.656 0-2.998 1.354-2.998 3.024s1.342 3.024 2.998 3.024Zm88.318 1.02c-5.243 0-9.493 4.29-9.493 9.576 0 5.288 4.25 9.577 9.493 9.577s9.497-4.29 9.497-9.576c0-5.288-4.25-9.577-9.497-9.577Zm0 14.156c-2.502 0-4.533-2.049-4.533-4.576 0-2.527 2.031-4.575 4.533-4.575 2.502 0 4.537 2.048 4.537 4.575s-2.031 4.576-4.537 4.576Zm-19.904-.008c-2.506 0-4.537-2.048-4.537-4.575s2.031-4.575 4.537-4.575c1.669 0 3.129.91 3.917 2.263a306.87 306.87 0 0 1 4.414-2.294c-1.613-2.963-4.739-4.97-8.327-4.97-5.243 0-9.493 4.285-9.493 9.576 0 5.29 4.25 9.572 9.493 9.572 3.768 0 7.024-2.214 8.559-5.419l-4.444-2.225a4.536 4.536 0 0 1-4.115 2.647h-.004Z"></path></svg></span>
+  <span class="kicker">Log ingestion benchmark</span>
+</div></header>
+
+<div class="wrap">
+<div class="hero">
+  <span class="eyebrow">Measured, not asserted</span>
+  <h1>Does a Kafka buffer earn its place in a log pipeline?</h1>
+  <p class="sub">Three ingestion architectures, one Elasticsearch, the same load and the
+  same failures applied to each. Every number below is produced by code in this
+  repository and can be reproduced with three commands.</p>
+  <dl class="meta"><div><dt>Docker CPUs</dt><dd>18</dd></div><div><dt>Docker memory</dt><dd>25.2 GB</dd></div><div><dt>Recorded</dt><dd>2026-09-14</dd></div><div><dt>Scenarios</dt><dd>9</dd></div></dl>
+</div>
+
+<section id="summary">
+  <div class="sec-head"><span class="sec-num">TL;DR</span><h2>What the runs showed</h2></div>
+  <p class="lede">Loss is counted exactly, not sampled: every event carries a per-source
+  sequence number, and the verifier walks the entire index to find which ones are
+  missing.</p>
+  <div class="table-wrap"><table><thead><tr><th>Scenario</th><th>Configuration</th><th>Result</th></tr></thead><tbody><tr><td>Elasticsearch unavailable 139 s</td><td>Kafka buffer</td><td><strong class="good">0 lost (0.00%)</strong></td></tr><tr><td>Elasticsearch unavailable 139 s</td><td>Direct, persisted queue</td><td><strong class="good">0 lost (0.00%)</strong></td></tr><tr><td>Elasticsearch unavailable 139 s</td><td>Direct, in-memory queue</td><td><strong class="bad">750,364 lost (50.02%)</strong></td></tr><tr><td>Collector restarted 99-104 s</td><td>Kafka buffer</td><td><strong class="good">0 lost (0.00%)</strong></td></tr><tr><td>Collector restarted 99-104 s</td><td>Direct, persisted queue</td><td><strong class="bad">311,830 lost (20.79%)</strong></td></tr><tr><td>Collector restarted 99-104 s</td><td>Direct, in-memory queue</td><td><strong class="bad">300,294 lost (20.02%)</strong></td></tr><tr><td>Burst to 150,000/s</td><td>Kafka buffer</td><td><strong class="good">0 lost (0.00%)</strong></td></tr><tr><td>Burst to 150,000/s</td><td>Direct, persisted queue</td><td><strong class="bad">3,131,529 lost (44.23%)</strong></td></tr><tr><td>Burst to 150,000/s</td><td>Direct, in-memory queue</td><td><strong class="bad">1,644,121 lost (23.22%)</strong></td></tr><tr><td>Latency at steady load</td><td>Kafka buffer</td><td>p50 100 ms, p99 212 ms</td></tr><tr><td>Latency at steady load</td><td>Direct, persisted queue</td><td>p50 18 ms, p99 33 ms</td></tr><tr><td>Latency at steady load</td><td>Direct, in-memory queue</td><td>p50 99 ms, p99 201 ms</td></tr><tr><td>One of three Kafka brokers killed</td><td>Kafka buffer</td><td><strong class="good">0 lost</strong>, producer stalled 8 s</td></tr><tr><td>Consumers scaled 1 &rarr; 4</td><td>Kafka buffer</td><td>2.38&times; throughput</td></tr><tr><td>20% of events redelivered</td><td>Fingerprint document _id</td><td>89,642 duplicates removed, index 2.0% <em>larger</em></td></tr><tr><td>Compression into Kafka</td><td>zstd vs none</td><td>93% fewer bytes buffered (13.8&times;)</td></tr></tbody></table></div>
+</section>
+
+<section id="capacity">
+<div class="sec-head"><span class="sec-num">00</span>
+<h2>Capacity calibration</h2></div>
+<p class="lede">Every later scenario runs below this line. If a failure test ran at a rate an arm could not sustain even while healthy, that arm would lose events for reasons unrelated to the failure, and the comparison would be worthless. The slowest arm here handles <strong>68,519 events/s</strong>, so the failure scenarios run at 5,000/s &mdash; roughly 14&times; of headroom for all three.</p>
+<img src="assets/00-capacity.svg" alt="Sustained rate per arm"><div class="table-wrap"><table><thead><tr><th>Architecture</th><th>Indexed</th><th>Generator emitted</th><th>Dropped at source</th><th>Limited by</th></tr></thead><tbody><tr><td><strong>Kafka buffer</strong></td><td>99,620/s</td><td>149,999/s</td><td>0</td><td>pipeline-limited</td></tr><tr><td><strong>Direct, persisted queue</strong></td><td>68,519/s</td><td>150,000/s</td><td>7,167,285</td><td>pipeline-limited</td></tr><tr><td><strong>Direct, in-memory queue</strong></td><td>98,588/s</td><td>149,998/s</td><td>4,397,245</td><td>pipeline-limited</td></tr></tbody></table></div>
+</section><section id="01-sink-outage">
+<div class="sec-head"><span class="sec-num">01</span>
+<h2>Elasticsearch goes away</h2></div>
+<p class="lede">The destination is stopped for two minutes while the load continues, because in real life it does. The question is not whether the pipeline notices &mdash; all three do &mdash; but where the events wait, and whether they are all still there when it comes back.</p>
+<img src="assets/01-sink-outage.svg" alt="Events lost per arm"><div class="table-wrap"><table><thead><tr><th>Architecture</th><th>Produced</th><th>Indexed</th><th>Lost</th><th>Loss</th><th>Dropped at source</th><th>Lost after acceptance</th></tr></thead><tbody><tr><td><strong>Kafka buffer</strong></td><td>1,500,000</td><td>1,500,000</td><td><strong class="good">0</strong></td><td>0.00%</td><td>0</td><td>0</td></tr><tr><td><strong>Direct, persisted queue</strong></td><td>1,500,000</td><td>1,500,000</td><td><strong class="good">0</strong></td><td>0.00%</td><td>0</td><td>0</td></tr><tr><td><strong>Direct, in-memory queue</strong></td><td>1,500,000</td><td>749,636</td><td><strong class="bad">750,364</strong></td><td>50.02%</td><td>750,373</td><td>0</td></tr></tbody></table></div><p class="note">&ldquo;Dropped at source&rdquo; are events the source could not hand over because its buffer was full. &ldquo;Lost after acceptance&rdquo; are events the pipeline took and never delivered &mdash; a different, worse kind of failure.</p><img src="assets/01-sink-outage-timeline.svg" alt="Documents over time">
+</section><section id="01c-collector-outage">
+<div class="sec-head"><span class="sec-num">01c</span>
+<h2>The collector tier restarts</h2></div>
+<p class="lede">This time the component that the sources actually talk to is taken away. With a broker in front, Logstash is only a consumer: stopping it stops consumption and the topic grows. Without one, Logstash <em>is</em> the endpoint, and while it is down the sources have nowhere to send. A persisted queue cannot help here, because a queue on a node that is not running accepts nothing.</p>
+<img src="assets/01c-collector-outage.svg" alt="Events lost per arm"><div class="table-wrap"><table><thead><tr><th>Architecture</th><th>Produced</th><th>Indexed</th><th>Lost</th><th>Loss</th><th>Dropped at source</th><th>Lost after acceptance</th></tr></thead><tbody><tr><td><strong>Kafka buffer</strong></td><td>1,500,000</td><td>1,500,000</td><td><strong class="good">0</strong></td><td>0.00%</td><td>0</td><td>0</td></tr><tr><td><strong>Direct, persisted queue</strong></td><td>1,499,999</td><td>1,188,169</td><td><strong class="bad">311,830</strong></td><td>20.79%</td><td>311,830</td><td>0</td></tr><tr><td><strong>Direct, in-memory queue</strong></td><td>1,500,000</td><td>1,199,706</td><td><strong class="bad">300,294</strong></td><td>20.02%</td><td>300,295</td><td>0</td></tr></tbody></table></div><p class="note">&ldquo;Dropped at source&rdquo; are events the source could not hand over because its buffer was full. &ldquo;Lost after acceptance&rdquo; are events the pipeline took and never delivered &mdash; a different, worse kind of failure.</p><img src="assets/01c-collector-outage-timeline.svg" alt="Documents over time">
+</section><section id="broker">
+<div class="sec-head"><span class="sec-num">01b</span>
+<h2>Killing a Kafka broker mid-ingest</h2></div>
+<p class="lede">Adding a broker adds something that can fail, and that objection deserves a measurement rather than a reassurance. One of three brokers is killed outright mid-ingest, with acks=all and idempotent producers. The cost is a brief producer stall while partition leadership moves.</p>
+<div class="table-wrap"><table><thead><tr><th>Configuration</th><th>Produced</th><th>Indexed</th><th>Lost</th><th>Broker down</th><th>Producer stalled</th></tr></thead><tbody><tr><td><strong>Replication factor 3, min.insync.replicas 2</strong></td><td>1,200,000</td><td>1,200,000</td><td><strong class="good">0</strong></td><td>97 s</td><td>8 s</td></tr></tbody></table></div>
+</section><section id="burst">
+<div class="sec-head"><span class="sec-num">02</span>
+<h2>A burst above capacity</h2></div>
+<p class="lede">Nothing is broken here. Everything is running and healthy; there is simply more data arriving for two minutes than the pipeline can index. What is being compared is not who absorbs it instantly &mdash; nobody does &mdash; but <em>where</em> the excess waits, and whether it is still there afterwards.</p>
+<img src="assets/02-burst.svg" alt="Loss during burst"><div class="table-wrap"><table><thead><tr><th>Architecture</th><th>Produced</th><th>Indexed</th><th>Lost</th><th>Loss</th><th>Peak Kafka lag</th><th>p99 latency</th></tr></thead><tbody><tr><td><strong>Kafka buffer</strong></td><td>7,080,000</td><td>7,080,000</td><td><strong class="good">0</strong></td><td>0.00%</td><td>2,061,595</td><td>21,986 ms</td></tr><tr><td><strong>Direct, persisted queue</strong></td><td>7,079,999</td><td>3,948,470</td><td><strong class="bad">3,131,529</strong></td><td>44.23%</td><td>0</td><td>3,667 ms</td></tr><tr><td><strong>Direct, in-memory queue</strong></td><td>7,080,000</td><td>5,435,879</td><td><strong class="bad">1,644,121</strong></td><td>23.22%</td><td>0</td><td>2,429 ms</td></tr></tbody></table></div><img src="assets/02-burst-timeline.svg" alt="Recovery after burst">
+</section><section id="latency">
+<div class="sec-head"><span class="sec-num">03</span>
+<h2>What the buffer costs in latency</h2></div>
+<p class="lede">A broker between the source and Logstash is a hop that was not there before, and a hop costs time. At a load well below capacity the median event takes 100 ms through Kafka: +82 ms against direct, persisted queue and +1 ms against direct, in-memory queue. The persisted-queue arm being the fastest here is not a typo &mdash; it acknowledges to disk and reads back in large contiguous chunks. Time-to-indexed and time-to-searchable are reported separately, because the refresh interval sits between them and conflating the two is the usual way an end-to-end latency claim ends up wrong.</p>
+<img src="assets/03-latency.svg" alt="Latency percentiles per arm"><div class="table-wrap"><table><thead><tr><th>Architecture</th><th>p50</th><th>p95</th><th>p99</th><th>max</th><th>Median time to searchable</th></tr></thead><tbody><tr><td><strong>Kafka buffer</strong></td><td>100 ms</td><td>191 ms</td><td>212 ms</td><td>268 ms</td><td>770 ms</td></tr><tr><td><strong>Direct, persisted queue</strong></td><td>18 ms</td><td>29 ms</td><td>33 ms</td><td>103 ms</td><td>837 ms</td></tr><tr><td><strong>Direct, in-memory queue</strong></td><td>99 ms</td><td>187 ms</td><td>201 ms</td><td>238 ms</td><td>886 ms</td></tr></tbody></table></div><p class="note">Time to searchable includes the 1&nbsp;second index refresh interval, which is a property of Elasticsearch rather than of the transport.</p>
+</section><section id="scale">
+<div class="sec-head"><span class="sec-num">04</span>
+<h2>Scaling consumers over partitions</h2></div>
+<p class="lede">The architecture claims capacity is added by adding partitions and consumers. A fixed backlog is drained by 1, 2 and 4 consumers in turn. Elasticsearch is replaced by a counting sink on purpose: with Elasticsearch on the end, every consumer count would converge on Elasticsearch's indexing rate and the chart would be about Elasticsearch instead.</p>
+<img src="assets/04-scale-out.svg" alt="Throughput by consumer count"><div class="table-wrap"><table><thead><tr><th>Consumer threads</th><th>Events drained</th><th>Time</th><th>Throughput</th><th>Speed-up vs 1</th></tr></thead><tbody><tr><td><strong>1</strong></td><td>7,999,936</td><td>66.9 s</td><td>119,573/s</td><td>1.0&times;</td></tr><tr><td><strong>2</strong></td><td>7,999,936</td><td>37.4 s</td><td>213,864/s</td><td>1.79&times;</td></tr><tr><td><strong>4</strong></td><td>7,999,936</td><td>28.1 s</td><td>284,213/s</td><td>2.38&times;</td></tr></tbody></table></div>
+</section><section id="dedup">
+<div class="sec-head"><span class="sec-num">05</span>
+<h2>Deduplicating at-least-once delivery</h2></div>
+<p class="lede">Kafka's idempotent producer removes duplicates created by its own retries, but it cannot remove a duplicate the source genuinely sent twice: to Kafka those are two different produce calls carrying identical content. Removing them is a pipeline job, and a content fingerprint used as the document&nbsp;_id does it &mdash; a redelivered event overwrites itself instead of being stored again.</p>
+<img src="assets/05-dedup.svg" alt="Documents with and without deduplication"><div class="table-wrap"><table><thead><tr><th>Mode</th><th>Unique events</th><th>Sent on the wire</th><th>Documents stored</th><th>Duplicate documents</th><th>Index size</th></tr></thead><tbody><tr><td><strong>auto-id</strong></td><td>450,000</td><td>539,642</td><td>539,642</td><td>89,642</td><td>150.4 MB</td></tr><tr><td><strong>fingerprint-id</strong></td><td>450,000</td><td>539,642</td><td>450,000</td><td>0</td><td>153.5 MB</td></tr></tbody></table></div><p class="callout"><strong>89,642</strong> duplicate documents removed &mdash; but the index is <strong>2.0% larger</strong>, not smaller. An explicit fingerprint <code>_id</code> costs more to store than the ids Elasticsearch generates itself, which at this duplication rate outweighs holding 17% fewer documents. Deduplicate for correctness, not for the storage bill.</p>
+</section><section id="compression">
+<div class="sec-head"><span class="sec-num">06</span>
+<h2>Compression, in transit and at rest</h2></div>
+<p class="lede">Two independent measurements on the same data: what compression saves on the way into the buffer, and what it saves once the data is at rest in Elasticsearch. A Kafka topic stores exactly what was sent, so the topic size on disk is both the network cost and the buffer's storage cost.</p>
+<img src="assets/06-compression.svg" alt="Bytes per event by codec"><div class="table-wrap"><table><thead><tr><th>Codec</th><th>Events</th><th>Topic on disk</th><th>Per event</th><th>Ratio vs uncompressed</th><th>Produce rate</th></tr></thead><tbody><tr><td><strong>none</strong></td><td>7,499,896</td><td>4,629.3 MB</td><td>617 B</td><td>&mdash;</td><td>241,498/s</td></tr><tr><td><strong>gzip</strong></td><td>7,470,653</td><td>501.1 MB</td><td>67 B</td><td>9.2&times;</td><td>224,490/s</td></tr><tr><td><strong>lz4</strong></td><td>7,499,974</td><td>963.5 MB</td><td>128 B</td><td>4.8&times;</td><td>245,361/s</td></tr><tr><td><strong>zstd</strong></td><td>7,499,906</td><td>335.6 MB</td><td>45 B</td><td>13.8&times;</td><td>246,056/s</td></tr></tbody></table></div><p class="note">Ratios are against the measured <code>none</code> run, so Kafka's own record overhead is on both sides of the comparison. The filler text in these events is drawn from a small vocabulary and compresses better than real log data, so treat the ordering of the codecs as the transferable result rather than the multiples.</p><img src="assets/06-compression-throughput.svg" alt="Throughput by codec"><div class="table-wrap"><table><thead><tr><th>Elasticsearch codec</th><th>Documents</th><th>Primary store</th><th>Per document</th></tr></thead><tbody><tr><td><strong>default</strong></td><td>599,998</td><td>171.3 MB</td><td>286 B</td></tr><tr><td><strong>best_compression</strong></td><td>599,998</td><td>97.7 MB</td><td>163 B</td></tr></tbody></table></div><p class="note">Both indices force-merged to a single segment before measuring, so segment count does not confuse the comparison. best_compression saves 42.9% here.</p>
+</section>
+
+<section id="limits">
+  <div class="sec-head"><span class="sec-num">&#9888;</span>
+  <h2>What this does not prove</h2></div>
+  <p class="lede">A benchmark that only lists its strengths is marketing. These are the
+  limits of this one.</p>
+  <ul class="plain">
+    <li><strong>The absolute rates are the rig's, not a platform's.</strong> This runs on
+    one laptop-class Docker host. The comparison between arms transfers; the
+    events-per-second numbers do not.</li>
+    <li><strong>Elasticsearch here is a local single node</strong>, not a managed
+    multi-zone service. Real availability zones and managed failover are not exercised.</li>
+    <li><strong>The events are synthetic</strong> &mdash; realistic in size and shape, but
+    not a customer's real log mix, which affects compression ratios in particular.</li>
+    <li><strong>The source buffer is a model.</strong> A real agent's buffering differs in
+    detail; what matters is that the same bound is applied to every arm.</li>
+    <li><strong>Persisted-queue throughput is disk-bound here.</strong> Container
+    filesystem sync on a developer machine is slower than a real server's, which counts
+    against the persisted-queue arm in the capacity measurement.</li>
+    <li><strong>Outage windows are not identical between arms.</strong> Recovery is
+    declared after a polled readiness check, so the measured windows differ by a few
+    seconds between arms. Loss scales with the length of the outage, so a small
+    difference between two arms in the same scenario is not an architectural ranking
+    &mdash; only the difference between losing everything and losing nothing is.</li>
+    <li><strong>Attribution of loss is approximate at the margin.</strong> A batch the
+    collector processed but whose HTTP response timed out is retried by the source and
+    can be counted as dropped even though it was indexed. The totals are exact; the
+    split between &ldquo;dropped at source&rdquo; and &ldquo;lost after acceptance&rdquo;
+    can be off by a handful of events in a million.</li>
+  </ul>
+</section>
+
+<footer>
+  <p>Generated by <code>bench/report.py</code> from the JSON files under
+  <code>results/</code>. Delete <code>docs/report/</code> and run <code>make report</code> to
+  rebuild it identically.</p>
+</footer>
+</div>
+</body>
+</html>

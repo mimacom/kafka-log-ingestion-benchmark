@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 380" width="820" height="380" role="img" aria-label="Throughput against consumer count" font-family='"Neue-Campton", Jost, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'>
+<rect width="820" height="380" fill="#ffffff"/>
+<text x="48" y="30" font-size="17" font-weight="500" fill="#242424">Throughput against consumer count</text>
+<text x="48" y="50" font-size="13" fill="#787878">One 6-partition topic, 7,999,936 event backlog, Elasticsearch replaced by a counting sink</text>
+<text x="48" y="368" font-size="12" fill="#787878">Higher is better</text>
+<text transform="translate(17,86) rotate(-90)" font-size="12" fill="#787878" text-anchor="end">events / second drained</text>
+<line x1="96" y1="322.0" x2="794" y2="322.0" stroke="#d8dade" stroke-width="1"/>
+<text x="86" y="326.0" font-size="11.5" fill="#787878" text-anchor="end">0</text>
+<line x1="96" y1="242.0" x2="794" y2="242.0" stroke="#d8dade" stroke-width="1"/>
+<text x="86" y="246.0" font-size="11.5" fill="#787878" text-anchor="end">100,000</text>
+<line x1="96" y1="162.0" x2="794" y2="162.0" stroke="#d8dade" stroke-width="1"/>
+<text x="86" y="166.0" font-size="11.5" fill="#787878" text-anchor="end">200,000</text>
+<line x1="96" y1="82.0" x2="794" y2="82.0" stroke="#d8dade" stroke-width="1"/>
+<text x="86" y="86.0" font-size="11.5" fill="#787878" text-anchor="end">300,000</text>
+<rect x="164.3" y="226.3" width="96.0" height="95.7" fill="#ff0651" rx="3"/>
+<text x="212.3" y="218.3" font-size="13" font-weight="500" fill="#242424" text-anchor="middle">119,573</text>
+<text x="212.3" y="342.0" font-size="12" fill="#414141" text-anchor="middle">1 consumer</text>
+<text x="212.3" y="356.0" font-size="12" fill="#414141" text-anchor="middle">thread(s)</text>
+<rect x="397.0" y="150.9" width="96.0" height="171.1" fill="#ff0651" rx="3"/>
+<text x="445.0" y="142.9" font-size="13" font-weight="500" fill="#242424" text-anchor="middle">213,864</text>
+<text x="445.0" y="342.0" font-size="12" fill="#414141" text-anchor="middle">2 consumer</text>
+<text x="445.0" y="356.0" font-size="12" fill="#414141" text-anchor="middle">thread(s)</text>
+<rect x="629.7" y="94.6" width="96.0" height="227.4" fill="#ff0651" rx="3"/>
+<text x="677.7" y="86.6" font-size="13" font-weight="500" fill="#242424" text-anchor="middle">284,213</text>
+<text x="677.7" y="342.0" font-size="12" fill="#414141" text-anchor="middle">4 consumer</text>
+<text x="677.7" y="356.0" font-size="12" fill="#414141" text-anchor="middle">thread(s)</text>
+<line x1="96" y1="322" x2="794" y2="322" stroke="#414141" stroke-width="1.2"/>
+</svg>

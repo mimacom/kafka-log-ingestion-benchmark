@@ -1,0 +1,18 @@
+api.http.host: "0.0.0.0"
+
+# The image ships its own pipeline/logstash.conf with a beats input and a
+# stdout output. Logstash concatenates every .conf in the pipeline directory,
+# so pointing at our own directory is what keeps that default out of the
+# measured pipeline.
+path.config: /usr/share/logstash/bench-pipeline/*.conf
+
+pipeline.workers: ${BENCH_LS_WORKERS:8}
+pipeline.batch.size: ${BENCH_LS_BATCH:1000}
+pipeline.batch.delay: 50
+
+# In-memory queue: the Logstash default. Events in flight are lost if the
+# process dies, which is precisely the property under test.
+queue.type: memory
+
+log.level: info
+monitoring.enabled: false

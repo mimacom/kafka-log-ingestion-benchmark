@@ -1,0 +1,1109 @@
+{
+  "arm": "direct-pq",
+  "config": {
+    "generators": 6,
+    "offered_rate": 150000,
+    "seconds": 90
+  },
+  "generator": {
+    "arm": "direct-pq",
+    "buffer_events": 200000,
+    "bytes_out": 3890207549,
+    "compression": null,
+    "delivered": 6332680,
+    "delivery_errors": 0,
+    "dropped_at_source": 7167285,
+    "ended_at_ms": 1789422824477,
+    "generation_ended_at_ms": 1789422821470,
+    "generators": 6,
+    "payload_bytes": 600,
+    "per_generator": {
+      "0": {
+        "first_seq": 0,
+        "last_seq": 2249999,
+        "produced": 2250000,
+        "replays": 0
+      },
+      "1": {
+        "first_seq": 0,
+        "last_seq": 2249986,
+        "produced": 2249987,
+        "replays": 0
+      },
+      "2": {
+        "first_seq": 0,
+        "last_seq": 2249984,
+        "produced": 2249985,
+        "replays": 0
+      },
+      "3": {
+        "first_seq": 0,
+        "last_seq": 2249998,
+        "produced": 2249999,
+        "replays": 0
+      },
+      "4": {
+        "first_seq": 0,
+        "last_seq": 2249998,
+        "produced": 2249999,
+        "replays": 0
+      },
+      "5": {
+        "first_seq": 0,
+        "last_seq": 2249994,
+        "produced": 2249995,
+        "replays": 0
+      }
+    },
+    "phases": [
+      {
+        "rate": 150000.0,
+        "seconds": 90.0
+      }
+    ],
+    "produced": 13499965,
+    "replay_fraction": 0.0,
+    "replays_sent": 0,
+    "run_id": "00-capacity-direct-pq",
+    "started_at_ms": 1789422731468
+  },
+  "generator_emitted_per_s": 149999.6,
+  "host": {
+    "cpus": 18,
+    "docker_version": "29.7.2",
+    "memory_bytes": 25159270400
+  },
+  "pipeline_kept_up_with_generator": false,
+  "probe": {
+    "interval": 1.0,
+    "samples": [
+      {
+        "max_searchable_seq": null,
+        "searchable_docs": 0,
+        "t": 0.0
+      },
+      {
+        "max_searchable_seq": 3904,
+        "searchable_docs": 20948,
+        "t": 1.0
+      },
+      {
+        "max_searchable_seq": 13469,
+        "searchable_docs": 78185,
+        "t": 2.0
+      },
+      {
+        "max_searchable_seq": 25543,
+        "searchable_docs": 150620,
+        "t": 3.0
+      },
+      {
+        "max_searchable_seq": 38336,
+        "searchable_docs": 228001,
+        "t": 4.0
+      },
+      {
+        "max_searchable_seq": 38336,
+        "searchable_docs": 228001,
+        "t": 5.0
+      },
+      {
+        "max_searchable_seq": 50400,
+        "searchable_docs": 299163,
+        "t": 6.0
+      },
+      {
+        "max_searchable_seq": 72805,
+        "searchable_docs": 370232,
+        "t": 7.0
+      },
+      {
+        "max_searchable_seq": 97103,
+        "searchable_docs": 437582,
+        "t": 8.0
+      },
+      {
+        "max_searchable_seq": 120066,
+        "searchable_docs": 499818,
+        "t": 9.0
+      },
+      {
+        "max_searchable_seq": 146252,
+        "searchable_docs": 568816,
+        "t": 10.0
+      },
+      {
+        "max_searchable_seq": 181237,
+        "searchable_docs": 650560,
+        "t": 11.0
+      },
+      {
+        "max_searchable_seq": 212489,
+        "searchable_docs": 725355,
+        "t": 12.0
+      },
+      {
+        "max_searchable_seq": 237950,
+        "searchable_docs": 798937,
+        "t": 13.0
+      },
+      {
+        "max_searchable_seq": 261610,
+        "searchable_docs": 867149,
+        "t": 14.0
+      },
+      {
+        "max_searchable_seq": 290812,
+        "searchable_docs": 942619,
+        "t": 15.0
+      },
+      {
+        "max_searchable_seq": 316468,
+        "searchable_docs": 1018004,
+        "t": 16.0
+      },
+      {
+        "max_searchable_seq": 344443,
+        "searchable_docs": 1090246,
+        "t": 17.0
+      },
+      {
+        "max_searchable_seq": 367678,
+        "searchable_docs": 1111538,
+        "t": 18.0
+      },
+      {
+        "max_searchable_seq": 368819,
+        "searchable_docs": 1154661,
+        "t": 19.0
+      },
+      {
+        "max_searchable_seq": 395687,
+        "searchable_docs": 1233391,
+        "t": 20.0
+      },
+      {
+        "max_searchable_seq": 425428,
+        "searchable_docs": 1307404,
+        "t": 21.0
+      },
+      {
+        "max_searchable_seq": 457326,
+        "searchable_docs": 1390031,
+        "t": 22.0
+      },
+      {
+        "max_searchable_seq": 487704,
+        "searchable_docs": 1469897,
+        "t": 23.0
+      },
+      {
+        "max_searchable_seq": 509455,
+        "searchable_docs": 1536175,
+        "t": 24.0
+      },
+      {
+        "max_searchable_seq": 534234,
+        "searchable_docs": 1611295,
+        "t": 25.0
+      },
+      {
+        "max_searchable_seq": 559560,
+        "searchable_docs": 1684647,
+        "t": 26.0
+      },
+      {
+        "max_searchable_seq": 593304,
+        "searchable_docs": 1764267,
+        "t": 27.0
+      },
+      {
+        "max_searchable_seq": 620354,
+        "searchable_docs": 1848210,
+        "t": 28.0
+      },
+      {
+        "max_searchable_seq": 650938,
+        "searchable_docs": 1927757,
+        "t": 29.0
+      },
+      {
+        "max_searchable_seq": 675984,
+        "searchable_docs": 2006079,
+        "t": 30.0
+      },
+      {
+        "max_searchable_seq": 675984,
+        "searchable_docs": 2006079,
+        "t": 31.01
+      },
+      {
+        "max_searchable_seq": 694150,
+        "searchable_docs": 2057862,
+        "t": 32.01
+      },
+      {
+        "max_searchable_seq": 716024,
+        "searchable_docs": 2124684,
+        "t": 33.01
+      },
+      {
+        "max_searchable_seq": 743492,
+        "searchable_docs": 2205394,
+        "t": 34.01
+      },
+      {
+        "max_searchable_seq": 784299,
+        "searchable_docs": 2289388,
+        "t": 35.01
+      },
+      {
+        "max_searchable_seq": 813196,
+        "searchable_docs": 2370270,
+        "t": 36.01
+      },
+      {
+        "max_searchable_seq": 837984,
+        "searchable_docs": 2443139,
+        "t": 37.01
+      },
+      {
+        "max_searchable_seq": 865260,
+        "searchable_docs": 2524316,
+        "t": 38.01
+      },
+      {
+        "max_searchable_seq": 888872,
+        "searchable_docs": 2596515,
+        "t": 39.01
+      },
+      {
+        "max_searchable_seq": 913659,
+        "searchable_docs": 2666486,
+        "t": 40.01
+      },
+      {
+        "max_searchable_seq": 944032,
+        "searchable_docs": 2750603,
+        "t": 41.01
+      },
+      {
+        "max_searchable_seq": 971658,
+        "searchable_docs": 2824764,
+        "t": 42.01
+      },
+      {
+        "max_searchable_seq": 996978,
+        "searchable_docs": 2896517,
+        "t": 43.01
+      },
+      {
+        "max_searchable_seq": 996978,
+        "searchable_docs": 2896517,
+        "t": 44.01
+      },
+      {
+        "max_searchable_seq": 1020764,
+        "searchable_docs": 2968330,
+        "t": 45.01
+      },
+      {
+        "max_searchable_seq": 1049509,
+        "searchable_docs": 3042364,
+        "t": 46.01
+      },
+      {
+        "max_searchable_seq": 1072398,
+        "searchable_docs": 3108218,
+        "t": 47.01
+      },
+      {
+        "max_searchable_seq": 1101294,
+        "searchable_docs": 3182011,
+        "t": 48.01
+      },
+      {
+        "max_searchable_seq": 1127978,
+        "searchable_docs": 3255488,
+        "t": 49.01
+      },
+      {
+        "max_searchable_seq": 1163652,
+        "searchable_docs": 3334068,
+        "t": 50.01
+      },
+      {
+        "max_searchable_seq": 1186455,
+        "searchable_docs": 3404846,
+        "t": 51.01
+      },
+      {
+        "max_searchable_seq": 1213619,
+        "searchable_docs": 3481877,
+        "t": 52.01
+      },
+      {
+        "max_searchable_seq": 1245940,
+        "searchable_docs": 3565825,
+        "t": 53.01
+      },
+      {
+        "max_searchable_seq": 1276846,
+        "searchable_docs": 3649123,
+        "t": 54.01
+      },
+      {
+        "max_searchable_seq": 1301502,
+        "searchable_docs": 3725437,
+        "t": 55.01
+      },
+      {
+        "max_searchable_seq": 1301502,
+        "searchable_docs": 3725437,
+        "t": 56.01
+      },
+      {
+        "max_searchable_seq": 1325784,
+        "searchable_docs": 3800736,
+        "t": 57.01
+      },
+      {
+        "max_searchable_seq": 1351149,
+        "searchable_docs": 3874468,
+        "t": 58.01
+      },
+      {
+        "max_searchable_seq": 1379962,
+        "searchable_docs": 3958635,
+        "t": 59.01
+      },
+      {
+        "max_searchable_seq": 1409181,
+        "searchable_docs": 4037830,
+        "t": 60.01
+      },
+      {
+        "max_searchable_seq": 1430816,
+        "searchable_docs": 4099770,
+        "t": 61.01
+      },
+      {
+        "max_searchable_seq": 1438257,
+        "searchable_docs": 4122141,
+        "t": 62.01
+      },
+      {
+        "max_searchable_seq": 1463422,
+        "searchable_docs": 4199381,
+        "t": 63.01
+      },
+      {
+        "max_searchable_seq": 1492233,
+        "searchable_docs": 4276455,
+        "t": 64.01
+      },
+      {
+        "max_searchable_seq": 1547336,
+        "searchable_docs": 4363084,
+        "t": 65.01
+      },
+      {
+        "max_searchable_seq": 1574007,
+        "searchable_docs": 4434992,
+        "t": 66.01
+      },
+      {
+        "max_searchable_seq": 1593709,
+        "searchable_docs": 4497562,
+        "t": 67.01
+      },
+      {
+        "max_searchable_seq": 1614332,
+        "searchable_docs": 4520425,
+        "t": 68.01
+      },
+      {
+        "max_searchable_seq": 1615326,
+        "searchable_docs": 4566458,
+        "t": 69.01
+      },
+      {
+        "max_searchable_seq": 1644955,
+        "searchable_docs": 4643140,
+        "t": 70.01
+      },
+      {
+        "max_searchable_seq": 1673589,
+        "searchable_docs": 4709744,
+        "t": 71.01
+      },
+      {
+        "max_searchable_seq": 1705542,
+        "searchable_docs": 4794910,
+        "t": 72.01
+      },
+      {
+        "max_searchable_seq": 1734144,
+        "searchable_docs": 4872614,
+        "t": 73.01
+      },
+      {
+        "max_searchable_seq": 1763208,
+        "searchable_docs": 4953864,
+        "t": 74.01
+      },
+      {
+        "max_searchable_seq": 1786363,
+        "searchable_docs": 5025267,
+        "t": 75.01
+      },
+      {
+        "max_searchable_seq": 1816928,
+        "searchable_docs": 5110386,
+        "t": 76.01
+      },
+      {
+        "max_searchable_seq": 1843252,
+        "searchable_docs": 5188475,
+        "t": 77.01
+      },
+      {
+        "max_searchable_seq": 1862246,
+        "searchable_docs": 5239210,
+        "t": 78.01
+      },
+      {
+        "max_searchable_seq": 1883576,
+        "searchable_docs": 5309330,
+        "t": 79.01
+      },
+      {
+        "max_searchable_seq": 1906532,
+        "searchable_docs": 5377361,
+        "t": 80.01
+      },
+      {
+        "max_searchable_seq": 1942004,
+        "searchable_docs": 5425568,
+        "t": 81.01
+      },
+      {
+        "max_searchable_seq": 1943176,
+        "searchable_docs": 5449640,
+        "t": 82.01
+      },
+      {
+        "max_searchable_seq": 1972619,
+        "searchable_docs": 5531440,
+        "t": 83.01
+      },
+      {
+        "max_searchable_seq": 2008471,
+        "searchable_docs": 5619276,
+        "t": 84.01
+      },
+      {
+        "max_searchable_seq": 2036337,
+        "searchable_docs": 5697958,
+        "t": 85.02
+      },
+      {
+        "max_searchable_seq": 2060723,
+        "searchable_docs": 5778148,
+        "t": 86.02
+      },
+      {
+        "max_searchable_seq": 2083741,
+        "searchable_docs": 5849676,
+        "t": 87.02
+      },
+      {
+        "max_searchable_seq": 2112957,
+        "searchable_docs": 5932031,
+        "t": 88.02
+      },
+      {
+        "max_searchable_seq": 2142128,
+        "searchable_docs": 6015791,
+        "t": 89.02
+      },
+      {
+        "max_searchable_seq": 2168696,
+        "searchable_docs": 6090124,
+        "t": 90.02
+      },
+      {
+        "max_searchable_seq": 2192865,
+        "searchable_docs": 6167975,
+        "t": 91.02
+      },
+      {
+        "max_searchable_seq": 2223776,
+        "searchable_docs": 6254059,
+        "t": 92.02
+      },
+      {
+        "max_searchable_seq": 2242059,
+        "searchable_docs": 6309654,
+        "t": 93.02
+      }
+    ]
+  },
+  "rate_series": [
+    {
+      "delivered_per_s": 42196.0,
+      "dropped_per_s": 0.0,
+      "produced_per_s": 149876.0,
+      "t": 1.0
+    },
+    {
+      "delivered_per_s": 61500.0,
+      "dropped_per_s": 0.0,
+      "produced_per_s": 150020.0,
+      "t": 2.0
+    },
+    {
+      "delivered_per_s": 70000.0,
+      "dropped_per_s": 72270.0,
+      "produced_per_s": 150070.0,
+      "t": 3.0
+    },
+    {
+      "delivered_per_s": 71500.0,
+      "dropped_per_s": 79368.0,
+      "produced_per_s": 150053.0,
+      "t": 4.0
+    },
+    {
+      "delivered_per_s": 69500.0,
+      "dropped_per_s": 82452.0,
+      "produced_per_s": 150317.0,
+      "t": 5.0
+    },
+    {
+      "delivered_per_s": 62500.0,
+      "dropped_per_s": 85166.0,
+      "produced_per_s": 150116.0,
+      "t": 6.0
+    },
+    {
+      "delivered_per_s": 62000.0,
+      "dropped_per_s": 88882.0,
+      "produced_per_s": 150070.0,
+      "t": 7.0
+    },
+    {
+      "delivered_per_s": 58000.0,
+      "dropped_per_s": 91200.0,
+      "produced_per_s": 150012.0,
+      "t": 8.0
+    },
+    {
+      "delivered_per_s": 61500.0,
+      "dropped_per_s": 88532.0,
+      "produced_per_s": 150032.0,
+      "t": 9.0
+    },
+    {
+      "delivered_per_s": 77000.0,
+      "dropped_per_s": 72995.0,
+      "produced_per_s": 149995.0,
+      "t": 10.0
+    },
+    {
+      "delivered_per_s": 71500.0,
+      "dropped_per_s": 79361.0,
+      "produced_per_s": 150069.0,
+      "t": 11.01
+    },
+    {
+      "delivered_per_s": 62000.0,
+      "dropped_per_s": 87181.0,
+      "produced_per_s": 149973.0,
+      "t": 12.01
+    },
+    {
+      "delivered_per_s": 72000.0,
+      "dropped_per_s": 78043.0,
+      "produced_per_s": 150043.0,
+      "t": 13.01
+    },
+    {
+      "delivered_per_s": 64000.0,
+      "dropped_per_s": 86053.0,
+      "produced_per_s": 150053.0,
+      "t": 14.01
+    },
+    {
+      "delivered_per_s": 65500.0,
+      "dropped_per_s": 85130.0,
+      "produced_per_s": 150026.0,
+      "t": 15.01
+    },
+    {
+      "delivered_per_s": 74500.0,
+      "dropped_per_s": 75739.0,
+      "produced_per_s": 150028.0,
+      "t": 16.01
+    },
+    {
+      "delivered_per_s": 60500.0,
+      "dropped_per_s": 88746.0,
+      "produced_per_s": 150061.0,
+      "t": 17.01
+    },
+    {
+      "delivered_per_s": 60000.0,
+      "dropped_per_s": 90085.0,
+      "produced_per_s": 150085.0,
+      "t": 18.01
+    },
+    {
+      "delivered_per_s": 73500.0,
+      "dropped_per_s": 76525.0,
+      "produced_per_s": 150025.0,
+      "t": 19.01
+    },
+    {
+      "delivered_per_s": 68000.0,
+      "dropped_per_s": 82036.0,
+      "produced_per_s": 150036.0,
+      "t": 20.01
+    },
+    {
+      "delivered_per_s": 78000.0,
+      "dropped_per_s": 72018.0,
+      "produced_per_s": 150018.0,
+      "t": 21.01
+    },
+    {
+      "delivered_per_s": 76500.0,
+      "dropped_per_s": 73547.0,
+      "produced_per_s": 150047.0,
+      "t": 22.01
+    },
+    {
+      "delivered_per_s": 59000.0,
+      "dropped_per_s": 91035.0,
+      "produced_per_s": 150035.0,
+      "t": 23.01
+    },
+    {
+      "delivered_per_s": 64500.0,
+      "dropped_per_s": 85524.0,
+      "produced_per_s": 150024.0,
+      "t": 24.01
+    },
+    {
+      "delivered_per_s": 75000.0,
+      "dropped_per_s": 75030.0,
+      "produced_per_s": 150030.0,
+      "t": 25.01
+    },
+    {
+      "delivered_per_s": 65500.0,
+      "dropped_per_s": 86084.0,
+      "produced_per_s": 150033.0,
+      "t": 26.01
+    },
+    {
+      "delivered_per_s": 77000.0,
+      "dropped_per_s": 72031.0,
+      "produced_per_s": 150040.0,
+      "t": 27.01
+    },
+    {
+      "delivered_per_s": 73500.0,
+      "dropped_per_s": 75991.0,
+      "produced_per_s": 150033.0,
+      "t": 28.01
+    },
+    {
+      "delivered_per_s": 76500.0,
+      "dropped_per_s": 73589.0,
+      "produced_per_s": 150089.0,
+      "t": 29.01
+    },
+    {
+      "delivered_per_s": 66500.0,
+      "dropped_per_s": 83500.0,
+      "produced_per_s": 150000.0,
+      "t": 30.01
+    },
+    {
+      "delivered_per_s": 47000.0,
+      "dropped_per_s": 102984.0,
+      "produced_per_s": 149984.0,
+      "t": 31.01
+    },
+    {
+      "delivered_per_s": 61500.0,
+      "dropped_per_s": 88574.0,
+      "produced_per_s": 150074.0,
+      "t": 32.01
+    },
+    {
+      "delivered_per_s": 75000.0,
+      "dropped_per_s": 75005.0,
+      "produced_per_s": 150005.0,
+      "t": 33.01
+    },
+    {
+      "delivered_per_s": 78000.0,
+      "dropped_per_s": 72362.0,
+      "produced_per_s": 150065.0,
+      "t": 34.01
+    },
+    {
+      "delivered_per_s": 75000.0,
+      "dropped_per_s": 74689.0,
+      "produced_per_s": 149986.0,
+      "t": 35.01
+    },
+    {
+      "delivered_per_s": 69000.0,
+      "dropped_per_s": 81019.0,
+      "produced_per_s": 150019.0,
+      "t": 36.01
+    },
+    {
+      "delivered_per_s": 76500.0,
+      "dropped_per_s": 73677.0,
+      "produced_per_s": 150058.0,
+      "t": 37.01
+    },
+    {
+      "delivered_per_s": 65500.0,
+      "dropped_per_s": 84378.0,
+      "produced_per_s": 149997.0,
+      "t": 38.01
+    },
+    {
+      "delivered_per_s": 65000.0,
+      "dropped_per_s": 85012.0,
+      "produced_per_s": 150012.0,
+      "t": 39.01
+    },
+    {
+      "delivered_per_s": 74500.0,
+      "dropped_per_s": 75545.0,
+      "produced_per_s": 150045.0,
+      "t": 40.01
+    },
+    {
+      "delivered_per_s": 74000.0,
+      "dropped_per_s": 76006.0,
+      "produced_per_s": 150006.0,
+      "t": 41.01
+    },
+    {
+      "delivered_per_s": 62000.0,
+      "dropped_per_s": 87977.0,
+      "produced_per_s": 149977.0,
+      "t": 42.01
+    },
+    {
+      "delivered_per_s": 72500.0,
+      "dropped_per_s": 77551.0,
+      "produced_per_s": 150051.0,
+      "t": 43.01
+    },
+    {
+      "delivered_per_s": 64500.0,
+      "dropped_per_s": 85694.0,
+      "produced_per_s": 150022.0,
+      "t": 44.01
+    },
+    {
+      "delivered_per_s": 68000.0,
+      "dropped_per_s": 81871.0,
+      "produced_per_s": 150043.0,
+      "t": 45.01
+    },
+    {
+      "delivered_per_s": 59500.0,
+      "dropped_per_s": 90561.0,
+      "produced_per_s": 150061.0,
+      "t": 46.01
+    },
+    {
+      "delivered_per_s": 64500.0,
+      "dropped_per_s": 85918.0,
+      "produced_per_s": 150023.0,
+      "t": 47.01
+    },
+    {
+      "delivered_per_s": 69500.0,
+      "dropped_per_s": 80786.0,
+      "produced_per_s": 150018.0,
+      "t": 48.01
+    },
+    {
+      "delivered_per_s": 76500.0,
+      "dropped_per_s": 72983.0,
+      "produced_per_s": 150025.0,
+      "t": 49.01
+    },
+    {
+      "delivered_per_s": 60000.0,
+      "dropped_per_s": 89950.0,
+      "produced_per_s": 150071.0,
+      "t": 50.01
+    },
+    {
+      "delivered_per_s": 66500.0,
+      "dropped_per_s": 84701.0,
+      "produced_per_s": 150043.0,
+      "t": 51.01
+    },
+    {
+      "delivered_per_s": 77000.0,
+      "dropped_per_s": 71885.0,
+      "produced_per_s": 150043.0,
+      "t": 52.01
+    },
+    {
+      "delivered_per_s": 78500.0,
+      "dropped_per_s": 71841.0,
+      "produced_per_s": 150066.0,
+      "t": 53.01
+    },
+    {
+      "delivered_per_s": 72000.0,
+      "dropped_per_s": 77712.0,
+      "produced_per_s": 149987.0,
+      "t": 54.01
+    },
+    {
+      "delivered_per_s": 74000.0,
+      "dropped_per_s": 76535.0,
+      "produced_per_s": 150116.0,
+      "t": 55.01
+    },
+    {
+      "delivered_per_s": 65000.0,
+      "dropped_per_s": 84700.0,
+      "produced_per_s": 150006.0,
+      "t": 56.02
+    },
+    {
+      "delivered_per_s": 70000.0,
+      "dropped_per_s": 80725.0,
+      "produced_per_s": 149992.0,
+      "t": 57.02
+    },
+    {
+      "delivered_per_s": 78500.0,
+      "dropped_per_s": 70700.0,
+      "produced_per_s": 150046.0,
+      "t": 58.02
+    },
+    {
+      "delivered_per_s": 74000.0,
+      "dropped_per_s": 76552.0,
+      "produced_per_s": 150052.0,
+      "t": 59.02
+    },
+    {
+      "delivered_per_s": 61000.0,
+      "dropped_per_s": 88891.0,
+      "produced_per_s": 150081.0,
+      "t": 60.02
+    },
+    {
+      "delivered_per_s": 27000.0,
+      "dropped_per_s": 122824.0,
+      "produced_per_s": 150134.0,
+      "t": 61.02
+    },
+    {
+      "delivered_per_s": 49500.0,
+      "dropped_per_s": 100648.0,
+      "produced_per_s": 150148.0,
+      "t": 62.02
+    },
+    {
+      "delivered_per_s": 68000.0,
+      "dropped_per_s": 82025.0,
+      "produced_per_s": 150025.0,
+      "t": 63.02
+    },
+    {
+      "delivered_per_s": 79500.0,
+      "dropped_per_s": 70892.0,
+      "produced_per_s": 150030.0,
+      "t": 64.02
+    },
+    {
+      "delivered_per_s": 78000.0,
+      "dropped_per_s": 71858.0,
+      "produced_per_s": 150220.0,
+      "t": 65.02
+    },
+    {
+      "delivered_per_s": 57000.0,
+      "dropped_per_s": 93022.0,
+      "produced_per_s": 150022.0,
+      "t": 66.02
+    },
+    {
+      "delivered_per_s": 62000.0,
+      "dropped_per_s": 88722.0,
+      "produced_per_s": 150026.0,
+      "t": 67.02
+    },
+    {
+      "delivered_per_s": 65500.0,
+      "dropped_per_s": 84935.0,
+      "produced_per_s": 150086.0,
+      "t": 68.02
+    },
+    {
+      "delivered_per_s": 70500.0,
+      "dropped_per_s": 79101.0,
+      "produced_per_s": 150233.0,
+      "t": 69.02
+    },
+    {
+      "delivered_per_s": 61500.0,
+      "dropped_per_s": 88386.0,
+      "produced_per_s": 150017.0,
+      "t": 70.02
+    },
+    {
+      "delivered_per_s": 80000.0,
+      "dropped_per_s": 69764.0,
+      "produced_per_s": 150046.0,
+      "t": 71.02
+    },
+    {
+      "delivered_per_s": 72000.0,
+      "dropped_per_s": 78229.0,
+      "produced_per_s": 150009.0,
+      "t": 72.02
+    },
+    {
+      "delivered_per_s": 73000.0,
+      "dropped_per_s": 76783.0,
+      "produced_per_s": 150003.0,
+      "t": 73.02
+    },
+    {
+      "delivered_per_s": 70500.0,
+      "dropped_per_s": 80360.0,
+      "produced_per_s": 150054.0,
+      "t": 74.02
+    },
+    {
+      "delivered_per_s": 73500.0,
+      "dropped_per_s": 75717.0,
+      "produced_per_s": 150023.0,
+      "t": 75.02
+    },
+    {
+      "delivered_per_s": 81000.0,
+      "dropped_per_s": 69150.0,
+      "produced_per_s": 149902.0,
+      "t": 76.02
+    },
+    {
+      "delivered_per_s": 42500.0,
+      "dropped_per_s": 107725.0,
+      "produced_per_s": 150098.0,
+      "t": 77.02
+    },
+    {
+      "delivered_per_s": 60500.0,
+      "dropped_per_s": 89176.0,
+      "produced_per_s": 150051.0,
+      "t": 78.02
+    },
+    {
+      "delivered_per_s": 73500.0,
+      "dropped_per_s": 77038.0,
+      "produced_per_s": 150056.0,
+      "t": 79.02
+    },
+    {
+      "delivered_per_s": 57000.0,
+      "dropped_per_s": 92591.0,
+      "produced_per_s": 150073.0,
+      "t": 80.02
+    },
+    {
+      "delivered_per_s": 69000.0,
+      "dropped_per_s": 81063.0,
+      "produced_per_s": 150063.0,
+      "t": 81.02
+    },
+    {
+      "delivered_per_s": 79000.0,
+      "dropped_per_s": 71015.0,
+      "produced_per_s": 150015.0,
+      "t": 82.03
+    },
+    {
+      "delivered_per_s": 79000.0,
+      "dropped_per_s": 71507.0,
+      "produced_per_s": 150007.0,
+      "t": 83.03
+    },
+    {
+      "delivered_per_s": 74000.0,
+      "dropped_per_s": 75590.0,
+      "produced_per_s": 150090.0,
+      "t": 84.03
+    },
+    {
+      "delivered_per_s": 73500.0,
+      "dropped_per_s": 76577.0,
+      "produced_per_s": 150016.0,
+      "t": 85.03
+    },
+    {
+      "delivered_per_s": 66500.0,
+      "dropped_per_s": 83458.0,
+      "produced_per_s": 150019.0,
+      "t": 86.03
+    },
+    {
+      "delivered_per_s": 74000.0,
+      "dropped_per_s": 76164.0,
+      "produced_per_s": 150076.0,
+      "t": 87.03
+    },
+    {
+      "delivered_per_s": 81500.0,
+      "dropped_per_s": 68403.0,
+      "produced_per_s": 149991.0,
+      "t": 88.03
+    },
+    {
+      "delivered_per_s": 68000.0,
+      "dropped_per_s": 82056.0,
+      "produced_per_s": 150056.0,
+      "t": 89.03
+    },
+    {
+      "delivered_per_s": 69500.0,
+      "dropped_per_s": 77609.0,
+      "produced_per_s": 146093.0,
+      "t": 90.03
+    },
+    {
+      "delivered_per_s": 79000.0,
+      "dropped_per_s": 0.0,
+      "produced_per_s": 0.0,
+      "t": 91.03
+    },
+    {
+      "delivered_per_s": 69000.0,
+      "dropped_per_s": 0.0,
+      "produced_per_s": 0.0,
+      "t": 92.03
+    }
+  ],
+  "recorded_at": "2026-09-14T23:53:45+0200",
+  "scenario": "00-capacity",
+  "sustained_events_per_s": 68518.7
+}

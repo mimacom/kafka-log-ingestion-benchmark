@@ -1,0 +1,71 @@
+{
+  "arm": "kafka",
+  "config": {
+    "codecs": [
+      "none",
+      "gzip",
+      "lz4",
+      "zstd"
+    ],
+    "generators": 4,
+    "rate": 250000,
+    "seconds": 30
+  },
+  "host": {
+    "cpus": 18,
+    "docker_version": "29.7.2",
+    "memory_bytes": 25159270400
+  },
+  "recorded_at": "2026-09-15T00:01:57+0200",
+  "scenario": "06-compression",
+  "storage": {
+    "best_compression_bytes": 97740239,
+    "bytes_per_doc_best": 162.9,
+    "bytes_per_doc_default": 285.5,
+    "default_codec_bytes": 171279600,
+    "docs": 599998,
+    "pct_saved": 42.9
+  },
+  "transport": [
+    {
+      "bytes_per_event": 617.3,
+      "codec": "none",
+      "events": 7499896,
+      "events_per_s": 241497.6,
+      "produce_seconds": 31.1,
+      "ratio_vs_raw": 0.97,
+      "topic_bytes": 4629320366,
+      "uncompressed_estimate_bytes": 4499937600
+    },
+    {
+      "bytes_per_event": 67.1,
+      "codec": "gzip",
+      "events": 7470653,
+      "events_per_s": 224489.9,
+      "produce_seconds": 33.3,
+      "ratio_vs_raw": 8.94,
+      "topic_bytes": 501140807,
+      "uncompressed_estimate_bytes": 4482391800
+    },
+    {
+      "bytes_per_event": 128.5,
+      "codec": "lz4",
+      "events": 7499974,
+      "events_per_s": 245360.9,
+      "produce_seconds": 30.6,
+      "ratio_vs_raw": 4.67,
+      "topic_bytes": 963518422,
+      "uncompressed_estimate_bytes": 4499984400
+    },
+    {
+      "bytes_per_event": 44.7,
+      "codec": "zstd",
+      "events": 7499906,
+      "events_per_s": 246056.2,
+      "produce_seconds": 30.5,
+      "ratio_vs_raw": 13.41,
+      "topic_bytes": 335573542,
+      "uncompressed_estimate_bytes": 4499943600
+    }
+  ]
+}

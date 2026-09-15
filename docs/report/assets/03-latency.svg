@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 380" width="820" height="380" role="img" aria-label="End-to-end latency, generator to indexed" font-family='"Neue-Campton", Jost, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'>
+<rect width="820" height="380" fill="#ffffff"/>
+<text x="48" y="30" font-size="17" font-weight="500" fill="#242424">End-to-end latency, generator to indexed</text>
+<text x="48" y="50" font-size="13" fill="#787878">Steady 5,000 events/s, queues empty</text>
+<text x="48" y="368" font-size="12" fill="#787878">Lower is better</text>
+<text transform="translate(17,86) rotate(-90)" font-size="12" fill="#787878" text-anchor="end">milliseconds</text>
+<line x1="96" y1="322.0" x2="794" y2="322.0" stroke="#d8dade" stroke-width="1"/>
+<text x="86" y="326.0" font-size="11.5" fill="#787878" text-anchor="end">0</text>
+<line x1="96" y1="274.0" x2="794" y2="274.0" stroke="#d8dade" stroke-width="1"/>
+<text x="86" y="278.0" font-size="11.5" fill="#787878" text-anchor="end">50</text>
+<line x1="96" y1="226.0" x2="794" y2="226.0" stroke="#d8dade" stroke-width="1"/>
+<text x="86" y="230.0" font-size="11.5" fill="#787878" text-anchor="end">100</text>
+<line x1="96" y1="178.0" x2="794" y2="178.0" stroke="#d8dade" stroke-width="1"/>
+<text x="86" y="182.0" font-size="11.5" fill="#787878" text-anchor="end">150</text>
+<line x1="96" y1="130.0" x2="794" y2="130.0" stroke="#d8dade" stroke-width="1"/>
+<text x="86" y="134.0" font-size="11.5" fill="#787878" text-anchor="end">200</text>
+<line x1="96" y1="82.0" x2="794" y2="82.0" stroke="#d8dade" stroke-width="1"/>
+<text x="86" y="86.0" font-size="11.5" fill="#787878" text-anchor="end">250</text>
+<rect x="128.6" y="226.0" width="51.8" height="96.0" fill="#ff0651" rx="2.5"/>
+<text x="154.5" y="220.0" font-size="11" fill="#414141" text-anchor="middle">100</text>
+<rect x="184.4" y="304.7" width="51.8" height="17.3" fill="#5b6b7f" rx="2.5"/>
+<text x="210.3" y="298.7" font-size="11" fill="#414141" text-anchor="middle">18</text>
+<rect x="240.3" y="227.0" width="51.8" height="95.0" fill="#a8b0ba" rx="2.5"/>
+<text x="266.2" y="221.0" font-size="11" fill="#414141" text-anchor="middle">99</text>
+<text x="212.3" y="342.0" font-size="12" fill="#414141" text-anchor="middle">p50</text>
+<rect x="361.2" y="138.6" width="51.8" height="183.4" fill="#ff0651" rx="2.5"/>
+<text x="387.2" y="132.6" font-size="11" fill="#414141" text-anchor="middle">191</text>
+<rect x="417.1" y="294.2" width="51.8" height="27.8" fill="#5b6b7f" rx="2.5"/>
+<text x="443.0" y="288.2" font-size="11" fill="#414141" text-anchor="middle">29</text>
+<rect x="472.9" y="142.5" width="51.8" height="179.5" fill="#a8b0ba" rx="2.5"/>
+<text x="498.8" y="136.5" font-size="11" fill="#414141" text-anchor="middle">187</text>
+<text x="445.0" y="342.0" font-size="12" fill="#414141" text-anchor="middle">p95</text>
+<rect x="593.9" y="118.5" width="51.8" height="203.5" fill="#ff0651" rx="2.5"/>
+<text x="619.8" y="112.5" font-size="11" fill="#414141" text-anchor="middle">212</text>
+<rect x="649.7" y="290.3" width="51.8" height="31.7" fill="#5b6b7f" rx="2.5"/>
+<text x="675.7" y="284.3" font-size="11" fill="#414141" text-anchor="middle">33</text>
+<rect x="705.6" y="129.0" width="51.8" height="193.0" fill="#a8b0ba" rx="2.5"/>
+<text x="731.5" y="123.0" font-size="11" fill="#414141" text-anchor="middle">201</text>
+<text x="677.7" y="342.0" font-size="12" fill="#414141" text-anchor="middle">p99</text>
+<line x1="96" y1="322" x2="794" y2="322" stroke="#414141" stroke-width="1.2"/>
+<rect x="653.9" y="56" width="12" height="12" rx="2.5" fill="#a8b0ba"/>
+<text x="671.9" y="66" font-size="12" fill="#414141">Direct, in-memory queue</text>
+<rect x="501.8" y="56" width="12" height="12" rx="2.5" fill="#5b6b7f"/>
+<text x="519.8" y="66" font-size="12" fill="#414141">Direct, persisted queue</text>
+<rect x="404.3" y="56" width="12" height="12" rx="2.5" fill="#ff0651"/>
+<text x="422.3" y="66" font-size="12" fill="#414141">Kafka buffer</text>
+</svg>

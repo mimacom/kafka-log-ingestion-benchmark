@@ -1,0 +1,3 @@
+# librdkafka wheels ship with gzip, snappy, lz4 and zstd support, which is
+# what scenario 06 compares. Everything else the harness needs is stdlib.
+confluent-kafka==2.6.1

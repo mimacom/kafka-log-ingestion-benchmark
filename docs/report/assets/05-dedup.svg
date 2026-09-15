@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 380" width="820" height="380" role="img" aria-label="Documents stored when the source redelivers" font-family='"Neue-Campton", Jost, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'>
+<rect width="820" height="380" fill="#ffffff"/>
+<text x="48" y="30" font-size="17" font-weight="500" fill="#242424">Documents stored when the source redelivers</text>
+<text x="48" y="50" font-size="13" fill="#787878">20% of events deliberately sent twice, as an at-least-once source does</text>
+<text x="48" y="368" font-size="12" fill="#787878">Lower is better</text>
+<text transform="translate(17,86) rotate(-90)" font-size="12" fill="#787878" text-anchor="end">documents in Elasticsearch</text>
+<line x1="96" y1="322.0" x2="794" y2="322.0" stroke="#d8dade" stroke-width="1"/>
+<text x="86" y="326.0" font-size="11.5" fill="#787878" text-anchor="end">0</text>
+<line x1="96" y1="242.0" x2="794" y2="242.0" stroke="#d8dade" stroke-width="1"/>
+<text x="86" y="246.0" font-size="11.5" fill="#787878" text-anchor="end">200,000</text>
+<line x1="96" y1="162.0" x2="794" y2="162.0" stroke="#d8dade" stroke-width="1"/>
+<text x="86" y="166.0" font-size="11.5" fill="#787878" text-anchor="end">400,000</text>
+<line x1="96" y1="82.0" x2="794" y2="82.0" stroke="#d8dade" stroke-width="1"/>
+<text x="86" y="86.0" font-size="11.5" fill="#787878" text-anchor="end">600,000</text>
+<rect x="222.5" y="106.1" width="96.0" height="215.9" fill="#a8b0ba" rx="3"/>
+<text x="270.5" y="98.1" font-size="13" font-weight="500" fill="#242424" text-anchor="middle">539,642</text>
+<text x="270.5" y="342.0" font-size="12" fill="#414141" text-anchor="middle">auto</text>
+<text x="270.5" y="356.0" font-size="12" fill="#414141" text-anchor="middle">id</text>
+<rect x="571.5" y="142.0" width="96.0" height="180.0" fill="#ff0651" rx="3"/>
+<text x="619.5" y="134.0" font-size="13" font-weight="500" fill="#242424" text-anchor="middle">450,000</text>
+<text x="619.5" y="342.0" font-size="12" fill="#414141" text-anchor="middle">fingerprint</text>
+<text x="619.5" y="356.0" font-size="12" fill="#414141" text-anchor="middle">id</text>
+<line x1="96" y1="322" x2="794" y2="322" stroke="#414141" stroke-width="1.2"/>
+</svg>

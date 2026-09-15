@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 380" width="820" height="380" role="img" aria-label="Bytes stored in Kafka per event, by codec" font-family='"Neue-Campton", Jost, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'>
+<rect width="820" height="380" fill="#ffffff"/>
+<text x="48" y="30" font-size="17" font-weight="500" fill="#242424">Bytes stored in Kafka per event, by codec</text>
+<text x="48" y="50" font-size="13" fill="#787878">Same events produced four times; size read back from the brokers' own log dirs</text>
+<text x="48" y="368" font-size="12" fill="#787878">Lower is better</text>
+<text transform="translate(17,86) rotate(-90)" font-size="12" fill="#787878" text-anchor="end">bytes per event</text>
+<line x1="96" y1="322.0" x2="794" y2="322.0" stroke="#d8dade" stroke-width="1"/>
+<text x="86" y="326.0" font-size="11.5" fill="#787878" text-anchor="end">0</text>
+<line x1="96" y1="262.0" x2="794" y2="262.0" stroke="#d8dade" stroke-width="1"/>
+<text x="86" y="266.0" font-size="11.5" fill="#787878" text-anchor="end">200</text>
+<line x1="96" y1="202.0" x2="794" y2="202.0" stroke="#d8dade" stroke-width="1"/>
+<text x="86" y="206.0" font-size="11.5" fill="#787878" text-anchor="end">400</text>
+<line x1="96" y1="142.0" x2="794" y2="142.0" stroke="#d8dade" stroke-width="1"/>
+<text x="86" y="146.0" font-size="11.5" fill="#787878" text-anchor="end">600</text>
+<line x1="96" y1="82.0" x2="794" y2="82.0" stroke="#d8dade" stroke-width="1"/>
+<text x="86" y="86.0" font-size="11.5" fill="#787878" text-anchor="end">800</text>
+<rect x="135.2" y="136.8" width="96.0" height="185.2" fill="#a8b0ba" rx="3"/>
+<text x="183.2" y="128.8" font-size="13" font-weight="500" fill="#242424" text-anchor="middle">617 B</text>
+<text x="183.2" y="342.0" font-size="12" fill="#414141" text-anchor="middle">none</text>
+<rect x="309.8" y="301.9" width="96.0" height="20.1" fill="#ff0651" rx="3"/>
+<text x="357.8" y="293.9" font-size="13" font-weight="500" fill="#242424" text-anchor="middle">67 B</text>
+<text x="357.8" y="342.0" font-size="12" fill="#414141" text-anchor="middle">gzip</text>
+<rect x="484.2" y="283.4" width="96.0" height="38.5" fill="#ff0651" rx="3"/>
+<text x="532.2" y="275.4" font-size="13" font-weight="500" fill="#242424" text-anchor="middle">128 B</text>
+<text x="532.2" y="342.0" font-size="12" fill="#414141" text-anchor="middle">lz4</text>
+<rect x="658.8" y="308.6" width="96.0" height="13.4" fill="#ff0651" rx="3"/>
+<text x="706.8" y="300.6" font-size="13" font-weight="500" fill="#242424" text-anchor="middle">45 B</text>
+<text x="706.8" y="342.0" font-size="12" fill="#414141" text-anchor="middle">zstd</text>
+<line x1="96" y1="322" x2="794" y2="322" stroke="#414141" stroke-width="1.2"/>
+</svg>

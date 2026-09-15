@@ -1,0 +1,209 @@
+# Benchmark rig: three ingestion architectures sharing one Elasticsearch.
+#
+#   kafka       generator -> Kafka -> Logstash -> Elasticsearch
+#   direct-mem  generator -> Logstash (in-memory queue) -> Elasticsearch
+#   direct-pq   generator -> Logstash (persisted queue)  -> Elasticsearch
+#
+# All containers are created by `make up`. Scenario scripts start and stop
+# individual containers by name so that exactly one arm is live at a time.
+
+name: klib
+
+x-logstash-common: &logstash-common
+  image: docker.elastic.co/logstash/logstash:${LS_VERSION:-9.3.2}
+  environment: &logstash-env
+    LS_JAVA_OPTS: -Xms${LS_HEAP:-2g} -Xmx${LS_HEAP:-2g}
+    # Parity: every arm runs the same filter block and the same ES output.
+    BENCH_INDEX: ${BENCH_INDEX:-bench-logs}
+    BENCH_ES: http://elasticsearch:9200
+    LS_DEDUP: ${LS_DEDUP:-false}
+    BENCH_LS_WORKERS: ${BENCH_LS_WORKERS:-8}
+    BENCH_LS_BATCH: ${BENCH_LS_BATCH:-125}
+  depends_on:
+    elasticsearch:
+      condition: service_healthy
+  restart: "no"
+
+services:
+  # ---------------------------------------------------------------- Kafka ---
+  # Three KRaft brokers in combined mode. Replication is a *topic* property,
+  # so the same cluster serves the RF=1 runs and the RF=3 broker-failure run.
+  kafka1: &kafka-common
+    image: apache/kafka:${KAFKA_VERSION:-4.1.2}
+    container_name: klib-kafka1
+    hostname: kafka1
+    environment: &kafka-env
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka1:9092
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka1:9093,2@kafka2:9093,3@kafka3:9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 2
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_NUM_PARTITIONS: ${KAFKA_PARTITIONS:-6}
+      KAFKA_LOG_RETENTION_HOURS: 24
+      KAFKA_HEAP_OPTS: -Xms${KAFKA_HEAP:-1g} -Xmx${KAFKA_HEAP:-1g}
+      CLUSTER_ID: bench-log-ingestion-cluster
+    volumes:
+      - kafka1-data:/var/lib/kafka/data
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/kafka/bin/kafka-broker-api-versions.sh --bootstrap-server localhost:9092 >/dev/null 2>&1"]
+      interval: 5s
+      timeout: 10s
+      retries: 30
+
+  kafka2:
+    <<: *kafka-common
+    container_name: klib-kafka2
+    hostname: kafka2
+    environment:
+      <<: *kafka-env
+      KAFKA_NODE_ID: 2
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka2:9092
+    volumes:
+      - kafka2-data:/var/lib/kafka/data
+
+  kafka3:
+    <<: *kafka-common
+    container_name: klib-kafka3
+    hostname: kafka3
+    environment:
+      <<: *kafka-env
+      KAFKA_NODE_ID: 3
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka3:9092
+    volumes:
+      - kafka3-data:/var/lib/kafka/data
+
+  # -------------------------------------------------------- Elasticsearch ---
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ES_VERSION:-9.3.2}
+    container_name: klib-elasticsearch
+    environment:
+      discovery.type: single-node
+      xpack.security.enabled: "false"
+      xpack.ml.enabled: "false"
+      # A full Docker disk would flip indices to read-only and be mistaken
+      # for pipeline data loss. Watermarks off keeps the failure honest.
+      cluster.routing.allocation.disk.threshold_enabled: "false"
+      ES_JAVA_OPTS: -Xms${ES_HEAP:-4g} -Xmx${ES_HEAP:-4g}
+    ulimits:
+      memlock: { soft: -1, hard: -1 }
+      nofile: { soft: 65536, hard: 65536 }
+    ports:
+      - "9200:9200"
+    volumes:
+      - es-data:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:9200/_cluster/health | grep -qE '\"status\":\"(green|yellow)\"'"]
+      interval: 5s
+      timeout: 5s
+      retries: 40
+
+  # ------------------------------------------------------------- Logstash ---
+  # Arm 1: consumes the Kafka topic.
+  logstash-kafka:
+    <<: *logstash-common
+    container_name: klib-ls-kafka
+    environment:
+      <<: *logstash-env
+      KAFKA_BOOTSTRAP: kafka1:9092,kafka2:9092,kafka3:9092
+      KAFKA_TOPIC: ${KAFKA_TOPIC:-logs}
+      KAFKA_GROUP: ${KAFKA_GROUP:-logstash}
+      CONSUMER_THREADS: ${CONSUMER_THREADS:-4}
+    ports:
+      - "9601:9600"   # Logstash node API, used for readiness and pipeline stats
+    volumes:
+      - ./stack/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./stack/logstash/pipeline/10-input-kafka.conf:/usr/share/logstash/bench-pipeline/10-input.conf:ro
+      - ./stack/logstash/pipeline/50-filter.conf:/usr/share/logstash/bench-pipeline/50-filter.conf:ro
+      - ./stack/logstash/pipeline/90-output-es.conf:/usr/share/logstash/bench-pipeline/90-output.conf:ro
+
+  # Same Kafka consumer as the arm above, but writing to the counting sink.
+  # Scenario 04 uses it to measure how far consumers scale over a partitioned
+  # topic without Elasticsearch's indexing rate setting the ceiling.
+  logstash-kafka-null:
+    <<: *logstash-common
+    container_name: klib-ls-null
+    depends_on: []
+    environment:
+      <<: *logstash-env
+      KAFKA_BOOTSTRAP: kafka1:9092,kafka2:9092,kafka3:9092
+      KAFKA_TOPIC: ${KAFKA_TOPIC:-logs}
+      KAFKA_GROUP: ${KAFKA_GROUP:-logstash}
+      CONSUMER_THREADS: ${CONSUMER_THREADS:-4}
+      BENCH_SINK: http://sink:8200/bulk
+    volumes:
+      - ./stack/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./stack/logstash/pipeline/10-input-kafka.conf:/usr/share/logstash/bench-pipeline/10-input.conf:ro
+      - ./stack/logstash/pipeline/50-filter.conf:/usr/share/logstash/bench-pipeline/50-filter.conf:ro
+      - ./stack/logstash/pipeline/90-output-null.conf:/usr/share/logstash/bench-pipeline/90-output.conf:ro
+    profiles: ["null-sink"]
+
+  # Arm 2: HTTP input, default in-memory queue (what an agent shipping
+  # straight to Logstash gets out of the box).
+  logstash-direct:
+    <<: *logstash-common
+    container_name: klib-ls-direct
+    ports:
+      - "9602:9600"
+    volumes:
+      - ./stack/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./stack/logstash/pipeline/10-input-http.conf:/usr/share/logstash/bench-pipeline/10-input.conf:ro
+      - ./stack/logstash/pipeline/50-filter.conf:/usr/share/logstash/bench-pipeline/50-filter.conf:ro
+      - ./stack/logstash/pipeline/90-output-es.conf:/usr/share/logstash/bench-pipeline/90-output.conf:ro
+
+  # Arm 3: same as arm 2 but with an on-disk persisted queue. This is the
+  # strongest no-Kafka configuration, and the one worth beating.
+  logstash-direct-pq:
+    <<: *logstash-common
+    container_name: klib-ls-direct-pq
+    ports:
+      - "9603:9600"
+    volumes:
+      - ./stack/logstash/config/logstash-pq.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./stack/logstash/pipeline/10-input-http.conf:/usr/share/logstash/bench-pipeline/10-input.conf:ro
+      - ./stack/logstash/pipeline/50-filter.conf:/usr/share/logstash/bench-pipeline/50-filter.conf:ro
+      - ./stack/logstash/pipeline/90-output-es.conf:/usr/share/logstash/bench-pipeline/90-output.conf:ro
+      - ls-pq-data:/usr/share/logstash/data
+
+  # ----------------------------------------------------------------- Bench ---
+  bench:
+    build: ./bench
+    image: klib-bench:local
+    container_name: klib-bench
+    environment:
+      BENCH_ES: http://elasticsearch:9200
+      BENCH_INDEX: ${BENCH_INDEX:-bench-logs}
+      KAFKA_BOOTSTRAP: kafka1:9092,kafka2:9092,kafka3:9092
+      KAFKA_TOPIC: ${KAFKA_TOPIC:-logs}
+      PYTHONUNBUFFERED: "1"
+    volumes:
+      - .:/work
+    working_dir: /work
+    # Started on demand via `docker compose run --rm bench ...`.
+    profiles: ["tools"]
+
+  # Counting bulk sink used by the scale-out scenario to take Elasticsearch
+  # out of the picture and measure consumer scaling alone.
+  sink:
+    build: ./bench
+    image: klib-bench:local
+    container_name: klib-sink
+    command: ["python", "-u", "bench/sink.py", "--port", "8200"]
+    ports:
+      - "8201:8200"   # scenario driver reads the counters from the host
+    volumes:
+      - .:/work
+    working_dir: /work
+    profiles: ["null-sink"]
+
+volumes:
+  es-data:
+  kafka1-data:
+  kafka2-data:
+  kafka3-data:
+  ls-pq-data:
